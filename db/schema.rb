@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_145350) do
+ActiveRecord::Schema.define(version: 2021_11_23_083542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,30 @@ ActiveRecord::Schema.define(version: 2021_11_22_145350) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_products_on_category_id"
   end
-  
-  add_foreign_key "products", "categories"
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "text"
+    t.boolean "isCompleted"
+    t.bigint "title_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["title_id"], name: "index_tasks_on_title_id"
+  end
+
+  create_table "title1s", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id"], name: "index_title1s_on_id", unique: true
+  end
+
+  create_table "titles", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "products", "categories"
+  add_foreign_key "tasks", "titles"
 end

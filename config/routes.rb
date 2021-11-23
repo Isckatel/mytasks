@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   get "/projects", to: "project#index"
 
-  resources :title1 do
-    resources :task1
+  resources :titles do
+    resources :tasks
   end
+
 end
