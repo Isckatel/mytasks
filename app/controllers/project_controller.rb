@@ -22,14 +22,25 @@ class ProjectController < ApplicationController
         # puts titletest.public_methods
         render json: titleListHash, status: :ok
     end
+
     #PATCH  /projects/:id/todos/:id — обновить задачу.
     def update
 
     end
+    
     # POST /todos
     def new
-        test = {"message"=>"OK"}
-        puts params[:title] #проверить есть ли в базе?
-        render json: test, status: :ok
+        #проверить есть ли в базе?
+        if Title.where(title: params[:title]).exists?
+            #Есть в базе раздел 
+            findTitle = Title.find_by(title: params[:title])
+            Task.create( title_id: findTitle.id, text: params[:text], isCompleted: false )            
+        else
+            #Нет в базе раздела
+            newTitle = Title.create(title: params[:title])
+            Task.create( title_id: newTitle.id, text: params[:text], isCompleted: false )           
+        end
+        lastTask = Task.last    
+        render json: lastTask, status: :ok
     end
 end
