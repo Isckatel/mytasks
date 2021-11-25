@@ -1,0 +1,20 @@
+
+<form>
+<input name="authenticity_token" 
+       type="hidden" 
+       value="<%= form_authenticity_token %>"/>
+ <button onclick="let todos = {
+  title: 'Фонд',
+  text: 'Пожертвовать 1000',
+  authenticity_token: '<%= form_authenticity_token %>'  
+};
+let response = fetch('/todos', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(todos)
+});
+let result = response.json();
+alert(result.message);">Тест </button>
+</form>

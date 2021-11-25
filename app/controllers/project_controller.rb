@@ -14,8 +14,7 @@ class ProjectController < ApplicationController
         titleList = Title.select("titles.id, titles.title").to_json
         titleListHash = JSON.parse(titleList)
 
-        # Список задач
-        tasksHash = Hash.new
+        # Список задач        
         for i in (1..countTitle)
             titleListHash[i-1]['todos'] = Task.select('tasks.id, tasks.text, tasks."isCompleted"').where(title_id:i).as_json
         end        
@@ -23,5 +22,14 @@ class ProjectController < ApplicationController
         # puts titletest.public_methods
         render json: titleListHash, status: :ok
     end
+    #PATCH  /projects/:id/todos/:id — обновить задачу.
+    def update
 
+    end
+    # POST /todos
+    def new
+        test = {"message"=>"OK"}
+        puts params[:title] #проверить есть ли в базе?
+        render json: test, status: :ok
+    end
 end

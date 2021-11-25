@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   root "project#index"
 
   get "/projects", to: "project#index"
-
-  # resources :titles do
-  #   resources :tasks
+  patch "/projects/:id/todos/:id", to: "project#update"
+  post "/todos", to: "project#new"  
+  # resources :titles, :path => :projects do
+  #   resources :tasks 
   # end
 
 end
