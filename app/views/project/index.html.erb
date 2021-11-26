@@ -3,7 +3,9 @@
 <input name="authenticity_token" 
        type="hidden" 
        value="<%= form_authenticity_token %>"/>
- <button onclick="let todos = {
+
+ <button type=button onclick="
+  let todos = {
   title: 'Фонд',
   text: 'Позвонить куратору',
   authenticity_token: '<%= form_authenticity_token %>'  
@@ -16,5 +18,19 @@ let response = fetch('/todos', {
   body: JSON.stringify(todos)
 });
 let result = response.json();
-alert(result.message);">Тест </button>
+alert(result.message);">Тест POST </button>
+
+
+
+ <button type=button onclick="
+let response = fetch(`http://localhost:3000/projects`, {
+  method: 'PATCH',
+  headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+  body: 'projects=1&todos=1&authenticity_token=<%= form_authenticity_token %>'
+});
+let result = response.json();
+alert(result.message);">Тест PATCH </button>
+
+
+
 </form>

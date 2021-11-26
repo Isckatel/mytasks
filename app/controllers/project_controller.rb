@@ -11,7 +11,8 @@ class ProjectController < ApplicationController
         countTitle = countTitleHash['count']
 
         # Cписок разделов
-        titleList = Title.select("titles.id, titles.title").to_json
+        @titles = Title.select("titles.id, titles.title")
+        titleList = @titles.to_json
         titleListHash = JSON.parse(titleList)
 
         # Список задач        
@@ -20,14 +21,37 @@ class ProjectController < ApplicationController
         end        
         # test << { :status => "Success" }
         # puts titletest.public_methods
-        render json: titleListHash, status: :ok
+        # render json: titleListHash, status: :ok
     end
+
+    #test add
+    def add
+        @title = Title.new        
+    end 
+
+    def create
+        @title = Title.new(title: params[:title])
+        if @title.save
+            redirect_to "/projects/add"
+        else
+            redirect_to "/projects/add" #render :new #Еще рендарим эту страницу
+        end
+
+        # render plain: params
+    end
+
 
     #PATCH  /projects/:id/todos/:id — обновить задачу.
     def update
-
+        puts "Попали в  update"
+        task = Task.find(params[:todos])
+        if task.update_attributes(isCompleted: !task.isCompleted)
+            render json: task, status: :ok
+        else
+            render json: {errors: task.errors}, status: :unprocessable_entity
+        end
     end
-    
+
     # POST /todos
     def new
         #проверить есть ли в базе?
@@ -43,4 +67,5 @@ class ProjectController < ApplicationController
         lastTask = Task.last    
         render json: lastTask, status: :ok
     end
+
 end
