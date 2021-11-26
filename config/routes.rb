@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   
   get  "/projects/add", to: "project#add"
   post "/projects", to: "project#create"
+  get '/projects/:id/edit', to: 'project#edit'
+  patch '/projects/:id/edit', to: 'project#update'
+  get '/projects/:id/edit2', to: 'project#edit2'
+  patch '/projects/:id/edit2', to: 'project#update2'
+
   # resources :titles, :path => :projects do
   #   resources :tasks 
   # end

@@ -40,17 +40,43 @@ class ProjectController < ApplicationController
         # render plain: params
     end
 
+    def edit
+        @title = Title.find_by id: params[:id]
+    end
 
-    #PATCH  /projects/:id/todos/:id — обновить задачу.
     def update
-        puts "Попали в  update"
-        task = Task.find(params[:todos])
-        if task.update_attributes(isCompleted: !task.isCompleted)
-            render json: task, status: :ok
+        @title = Title.find_by id: params[:id]
+        @title.title = params[:title]
+        if @title.save
+            redirect_to "/projects/add"
         else
-            render json: {errors: task.errors}, status: :unprocessable_entity
+            render :edit
         end
     end
+    def edit2
+        @title = Title.find_by id: params[:id]
+    end
+
+    def update2
+        @title = Title.find_by id: params[:id]
+        @title.title = params[:title]
+        if @title.save
+            redirect_to "/projects/add"
+        else
+            render :edit
+        end
+    end
+
+    #PATCH  /projects/:id/todos/:id — обновить задачу.
+    # def update
+    #     puts "Попали в  update"
+    #     task = Task.find(params[:todos])
+    #     if task.update_attributes(isCompleted: !task.isCompleted)
+    #         render json: task, status: :ok
+    #     else
+    #         render json: {errors: task.errors}, status: :unprocessable_entity
+    #     end
+    # end
 
     # POST /todos
     def new

@@ -1,0 +1,11 @@
+<h1>Edit title</h1>
+
+<%= @title.inspect %>
+
+<%= form_with model: @Title do |f|  %>
+    <input type="hidden" name="_method" value="patch">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.submit "Edit title"%>
+<% end %>
+
