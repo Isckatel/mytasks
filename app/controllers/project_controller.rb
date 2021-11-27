@@ -41,43 +41,24 @@ class ProjectController < ApplicationController
     end
 
     def edit
-        @title = Title.find_by id: params[:id]
-    end
-
-    def update
-        @title = Title.find_by id: params[:id]
-        @title.title = params[:title]
-        if @title.save
-            redirect_to "/projects/add"
-        else
-            render :edit
-        end
-    end
-    def edit2
-        @title = Title.find_by id: params[:id]
-    end
-
-    def update2
-        @title = Title.find_by id: params[:id]
-        @title.title = params[:title]
-        if @title.save
-            redirect_to "/projects/add"
-        else
-            render :edit
-        end
+        puts params
+        @task = Task.find_by id: params[:id]
     end
 
     #PATCH  /projects/:id/todos/:id — обновить задачу.
-    # def update
-    #     puts "Попали в  update"
-    #     task = Task.find(params[:todos])
-    #     if task.update_attributes(isCompleted: !task.isCompleted)
-    #         render json: task, status: :ok
-    #     else
-    #         render json: {errors: task.errors}, status: :unprocessable_entity
-    #     end
-    # end
-
+    def update
+        @task = Task.find_by id: params[:id]
+        @task.isCompleted = !@task.isCompleted
+        #task.update_attributes(isCompleted: !task.isCompleted)
+        if @task.save
+            redirect_to "/projects/1/todo/1"
+            #render json: task, status: :ok
+        else
+            redirect_to "/projects/1/todo/1"
+            #render json: {errors: task.errors}, status: :unprocessable_entity
+        end
+    end      
+    
     # POST /todos
     def new
         #проверить есть ли в базе?

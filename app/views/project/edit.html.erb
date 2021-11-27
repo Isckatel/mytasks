@@ -1,11 +1,11 @@
-<h1>Edit title</h1>
+<h1>Edit task</h1>
 
-<%= @title.inspect %>
+<%= @task.inspect %>
 
-<%= form_with model: @Title do |f|  %>
+<%= form_with model: @Task do |f|  %>
     <input type="hidden" name="_method" value="patch">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-    <%= f.submit "Edit title"%>
+    <%= f.label :text %>
+    <%= f.text_field :text %>
+    <%= f.submit "Edit task"%>
 <% end %>
 
