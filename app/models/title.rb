@@ -1,6 +1,6 @@
 class Title < ApplicationRecord
-    # Говорю, что категория имеет много продуктов и при удалении категории удалять и все ее продукты
+    # Категория имеет много задачь и при удалении категории удалять и задачи
     has_many :tasks, dependent: :destroy
-    # Указываю, что перед записью нужно проверять name на наличие и уникальность
-    validates :title, presence: true, uniqueness: true
+    # Перед записью нужно проверять name на наличие и уникальность
+    validates :title, presence: true, uniqueness: true, length: {maximum: 140}
 end

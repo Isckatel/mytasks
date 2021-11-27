@@ -1,7 +1,6 @@
 class Task < ApplicationRecord
-  # Указываю, что продукт принадлежит категории
+  # задачи принадлежат категории
   belongs_to :title
-  # указываю, что нужно проверять name на наличие и уникальность
-  # а цену на наличие и на больше нуля
-  validates :text, presence: true, uniqueness: true
+  # проверять name на наличие
+  validates :text, presence: true, length: {maximum: 300}
 end

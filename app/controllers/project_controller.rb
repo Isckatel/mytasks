@@ -6,8 +6,7 @@ class ProjectController < ApplicationController
 
         # Колличество разделов
         countTitleSQL = Title.select("COUNT(*) AS count").to_json             
-        countTitleHash = JSON.parse(countTitleSQL).first
-        countTitleHash["todos"] = "Success"  
+        countTitleHash = JSON.parse(countTitleSQL).first         
         countTitle = countTitleHash['count']
 
         # Cписок разделов
@@ -19,9 +18,7 @@ class ProjectController < ApplicationController
         for i in (1..countTitle)
             titleListHash[i-1]['todos'] = Task.select('tasks.id, tasks.text, tasks."isCompleted"').where(title_id:i).as_json
         end        
-        # test << { :status => "Success" }
-        # puts titletest.public_methods
-        # render json: titleListHash, status: :ok
+        render json: titleListHash, status: :ok
     end   
 
     def edit        
@@ -33,29 +30,28 @@ class ProjectController < ApplicationController
     def update
         @task = Task.find_by id: params[:id]
         @task.isCompleted = !@task.isCompleted
-        #task.update_attributes(isCompleted: !task.isCompleted)
         if @task.save
-            redirect_to "/projects/1/todo/"+@task.id.to_s
-            #render json: task, status: :ok
+            #redirect_to "/projects/"+@task.title_id.to_s+"/todo/"+@task.id.to_s
+            render json: @task, status: :ok
         else
-            redirect_to "/projects/1/todo/"+@task.id.to_s
-            #render json: {errors: task.errors}, status: :unprocessable_entity
+            # redirect_to "/projects/"+@task.title_id.to_s+"/todo/"+@task.id.to_s
+            render json: {errors: @task.errors}, status: :unprocessable_entity
         end
     end      
     
     # POST /todos
-    def new
-        #проверить есть ли в базе?
+    def new     
         if Title.where(title: params[:title]).exists?
-            #Есть в базе раздел 
-            findTitle = Title.find_by(title: params[:title])
-            Task.create( title_id: findTitle.id, text: params[:text], isCompleted: false )            
+            @title = Title.find_by(title: params[:title])          
         else
-            #Нет в базе раздела
-            newTitle = Title.create(title: params[:title])
-            Task.create( title_id: newTitle.id, text: params[:text], isCompleted: false )           
+            @title = Title.create(title: params[:title])                     
         end
-        lastTask = Task.last    
-        render json: lastTask, status: :ok
+        task = Task.create( title_id: @title.id, text: params[:text], isCompleted: false)
+
+        if task.errors.empty?            
+            render json: task, status: :ok
+        else
+            render json: {errors: task.errors}, status: :unprocessable_entity
+        end    
     end
 end
