@@ -1,9 +1,6 @@
 class ProjectController < ApplicationController
      # GET /titles
-    def index
-        # titles = Title.left_outer_joins(:tasks).select('titles.id, titles.title, COUNT(tasks.id) AS tasks_count').group('titles.id, titles.title')
-        # titles = Title.joins("join tasks on titles.id = tasks.title_id").select('titles.id, titles.title, tasks.id, tasks.text, tasks."isCompleted"')
-
+    def index        
         # Колличество разделов
         countTitleSQL = Title.select("COUNT(*) AS count").to_json             
         countTitleHash = JSON.parse(countTitleSQL).first         
@@ -20,11 +17,6 @@ class ProjectController < ApplicationController
         end        
         render json: titleListHash, status: :ok
     end   
-
-    def edit        
-        puts "Параметры которые видет edit " + params.to_json
-        @task = Task.find_by id: params[:id]
-    end
 
     #PATCH  /projects/:id/todos/:id — обновить задачу.
     def update
