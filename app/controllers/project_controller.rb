@@ -24,8 +24,8 @@ class ProjectController < ApplicationController
         # render json: titleListHash, status: :ok
     end   
 
-    def edit
-        puts params
+    def edit        
+        puts "Параметры которые видет edit " + params.to_json
         @task = Task.find_by id: params[:id]
     end
 
@@ -35,10 +35,10 @@ class ProjectController < ApplicationController
         @task.isCompleted = !@task.isCompleted
         #task.update_attributes(isCompleted: !task.isCompleted)
         if @task.save
-            redirect_to "/projects/1/todo/1"
+            redirect_to "/projects/1/todo/"+@task.id.to_s
             #render json: task, status: :ok
         else
-            redirect_to "/projects/1/todo/1"
+            redirect_to "/projects/1/todo/"+@task.id.to_s
             #render json: {errors: task.errors}, status: :unprocessable_entity
         end
     end      

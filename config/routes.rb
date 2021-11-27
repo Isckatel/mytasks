@@ -3,10 +3,8 @@ Rails.application.routes.draw do
   root "project#index"
 
   get "/projects", to: "project#index"
-  patch "/projects/:id/todos/:id", to: "project#update"
-  post "/todos", to: "project#new"  
-  # resources :titles, :path => :projects do
-  #   resources :tasks 
-  # end
+  get "/projects/:title_id/todo/:id", to: "project#edit"
+  patch "/projects/:title_id/todo/:id", to: "project#update"
+  post "/todos", to: "project#new" 
 
 end
