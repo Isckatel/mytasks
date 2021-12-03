@@ -16,6 +16,8 @@ Rails.application.configure do
 
   #Снять блокировку
   config.hosts << /[a-z0-9]+\.herokuapp\.com/
+  config.hosts << "blooming-dawn-85383.herokuapp.com"
+  config.hosts << "mytasks-ruby.herokuapp.com"
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
