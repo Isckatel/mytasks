@@ -1,4 +1,6 @@
 class ProjectController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: [:index, :update, :new]
+
      # GET /titles
     def index        
         # Колличество разделов
