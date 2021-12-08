@@ -8,16 +8,16 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  #Снять блокировку
+  config.hosts << /[a-z0-9]+\.herokuapp\.com/
+  config.hosts << "blooming-dawn-85383.herokuapp.com"
+  config.hosts << "mytasks-ruby.herokuapp.com"
+
   # Do not eager load code on boot.
   config.eager_load = false
 
   # Show full error reports.
   config.consider_all_requests_local = true
-
-  #Снять блокировку
-  config.hosts << /[a-z0-9]+\.herokuapp\.com/
-  config.hosts << "blooming-dawn-85383.herokuapp.com"
-  config.hosts << "mytasks-ruby.herokuapp.com"
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
