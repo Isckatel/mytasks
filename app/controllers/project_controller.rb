@@ -8,14 +8,18 @@ class ProjectController < ApplicationController
         countTitleHash = JSON.parse(countTitleSQL).first         
         countTitle = countTitleHash['count']
 
+        # Массив id разделов
+        arrTitleId = Title.pluck(:id)
+        print arrTitleId 
+
         # Cписок разделов
         @titles = Title.select("titles.id, titles.title")
         titleList = @titles.to_json
         titleListHash = JSON.parse(titleList)
 
         # Список задач        
-        for i in (1..countTitle)
-            titleListHash[i-1]['todos'] = Task.select('tasks.id, tasks.text, tasks."isCompleted"').where(title_id:i).as_json
+        for i in (0..countTitle-1)
+            titleListHash[i]['todos'] = Task.select('tasks.id, tasks.text, tasks."isCompleted", tasks.title_id').where(title_id:arrTitleId[i]).as_json
         end        
         render json: titleListHash, status: :ok
     end   
